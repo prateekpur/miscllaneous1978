@@ -2,7 +2,7 @@ import fitz  # PyMuPDF
 import openai
 
 # OpenAI API Key (Replace with your actual API key)
-OPENAI_API_KEY = "sk-2uKAyYKC70W-YtfBKMlIUSVToqDkEpL_0YUrAYpgzYT3BlbkFJGUQ4apPTFzZ-X_qNa4XRbfHXxr7pdLpKAV8kUMI8kA"
+OPENAI_API_KEY = ""
 #openai.api_base = "https://api.together.xyz/v1"
 #openai.api_key = "87bc13bd7c7ee62c7ec544dcf20b397382d41b680eafed9e13b2674da035933f"
 
