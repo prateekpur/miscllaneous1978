@@ -1,2 +1,2 @@
 # miscllaneous1978
-Miscllaneous scripts
+Repo to store miscllaneous file and scripts
