@@ -1,13 +1,13 @@
 import pdfplumber
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 import nltk
 import string
 import numpy as np
 import networkx as nx
 import re
+from nltk.tokenize import sent_tokenize
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
-# Download necessary NLTK resources
 nltk.download('punkt')
 
 # Step 1: Extract text from the PDF
@@ -70,14 +70,33 @@ def summarize_text(text, num_sentences=5):
     
     return summary
 
+def keyword_search(question, text):
+    words = question.lower().split()
+    for sent in sent_tokenize(text):
+        if any(word in sent.lower() for word in words):
+            return sent  # Return the first matching sentence
+    return "I couldn't find an answer in the document."
+
+
+
 # Main workflow
 pdf_path = "okta-last-quarter.pdf"  # Path to your PDF file
+
 
 # Extract and preprocess text
 extracted_text = extract_text_from_pdf(pdf_path)
 
+tokens = tokenize_sentences(extracted_text)
+question = "Total liability?"
+answer = keyword_search(question, extracted_text)
+print(answer)
+
+
+#print(tokens)
+#print(extract_financial_numbers(extracted_text))
+
 # Generate a summary
-summary = summarize_text(extracted_text)
+# summary = summarize_text(extracted_text)
 
 #print("Summary:")
-#print(summary)
+# print(summary)
