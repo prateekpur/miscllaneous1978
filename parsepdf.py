@@ -4,7 +4,7 @@ import openai
 # OpenAI API Key (Replace with your actual API key)
 OPENAI_API_KEY = ""
 #openai.api_base = "https://api.together.xyz/v1"
-#openai.api_key = "87bc13bd7c7ee62c7ec544dcf20b397382d41b680eafed9e13b2674da035933f"
+#openai.api_key = ""
 
 
 
@@ -30,7 +30,7 @@ def ask_llm(question, chunks):
         """
         client = openai.OpenAI()  # Create a client instance
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo" , #"gpt-4",
+            model="gpt-3.5-turbo" ,
             messages=[
                 {"role": "system", "content": "You are an AI that extracts answers from documents."},
                 {"role": "user", "content": prompt}
@@ -43,9 +43,7 @@ def ask_llm(question, chunks):
         insights.append(chunkresponse)
         print(f"Processed chunk {idx+1}/{len(chunks)}")
         #print(chunkresponse)
-    combined_summary = generate_final_summary("\n\n".join(insights))
-    return combined_summary
-    return "\n\n".join(insights)
+    return generate_final_summary("\n\n".join(insights))
 
 
 #  Function to ask Together.ai model a question
@@ -80,7 +78,6 @@ def generate_final_summary(combined_text):
                   {"role": "user", "content": prompt}],
         max_tokens=700
     )
-#response.choices[0].message.content.strip()
     return response.choices[0].message.content.strip()
 
 
@@ -88,17 +85,17 @@ def interactive_pdf_agent(pdf_path):
     """Interactive agent to parse PDF and answer user questions."""
     chunks = extract_text_from_pdf(pdf_path)
 
-    print("\n✅ PDF successfully parsed. You can now ask questions.")
+    print("\nPDF successfully parsed. You can now ask questions.")
     print("Type 'exit' to quit.\n")
     
     while True:
-        question = input("🔹 Ask a question: ")
+        question = input("Ask a question: ")
         if question.lower() in ["exit", "quit"]:
-            print("👋 Exiting agent. Goodbye!")
+            print("Exiting agent. Goodbye!")
             break
         answer = ask_llm(question, chunks)
         #answer = ask_together_ai(question, text)
-        print(f"📝 Answer: {answer}\n")
+        print(f"Answer: {answer}\n")
 
 # Example Usage
 pdf_path = "okta-last-quarter.pdf"  # Replace with your PDF file
