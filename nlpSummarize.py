@@ -7,8 +7,10 @@ import re
 from nltk.tokenize import sent_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from sentence_transformers import SentenceTransformer, util
 
 nltk.download('punkt')
+model = SentenceTransformer('all-MiniLM-L6-v2')
 
 # Step 1: Extract text from the PDF
 def extract_text_from_pdf(pdf_path):
@@ -77,6 +79,15 @@ def keyword_search(question, text):
             return sent  # Return the first matching sentence
     return "I couldn't find an answer in the document."
 
+def find_most_relevant_sentence(question, sentences):
+    question_embedding = model.encode(question)
+    sentence_embeddings = model.encode(sentences)
+
+    # Find the most similar sentence
+    similarities = util.cos_sim(question_embedding, sentence_embeddings)
+    best_match_idx = similarities.argmax()
+    return sentences[best_match_idx]
+
 
 
 # Main workflow
@@ -86,9 +97,12 @@ pdf_path = "okta-last-quarter.pdf"  # Path to your PDF file
 # Extract and preprocess text
 extracted_text = extract_text_from_pdf(pdf_path)
 
-tokens = tokenize_sentences(extracted_text)
-question = "Total liability?"
-answer = keyword_search(question, extracted_text)
+#tokens = tokenize_sentences(extracted_text)
+question = "Total assets"
+sentences = tokenize_sentences(extracted_text)
+#answer = keyword_search(question, extracted_text)
+#print(answer)
+answer = find_most_relevant_sentence(question, sentences)
 print(answer)
 
 
