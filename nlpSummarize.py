@@ -98,19 +98,19 @@ pdf_path = "okta-last-quarter.pdf"  # Path to your PDF file
 extracted_text = extract_text_from_pdf(pdf_path)
 
 #tokens = tokenize_sentences(extracted_text)
-question = "Total assets"
-sentences = tokenize_sentences(extracted_text)
+#question = "Total assets"
+#sentences = tokenize_sentences(extracted_text)
 #answer = keyword_search(question, extracted_text)
 #print(answer)
-answer = find_most_relevant_sentence(question, sentences)
-print(answer)
+#answer = find_most_relevant_sentence(question, sentences)
+#print(answer)
 
 
 #print(tokens)
 #print(extract_financial_numbers(extracted_text))
 
 # Generate a summary
-# summary = summarize_text(extracted_text)
+summary = summarize_text(extracted_text)
 
-#print("Summary:")
-# print(summary)
+print("Summary:")
+print(summary)
