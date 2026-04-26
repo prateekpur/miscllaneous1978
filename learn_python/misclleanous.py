@@ -1,3 +1,6 @@
+import random
+
+
 def math_operation():
     """
     Day 1
@@ -47,36 +50,73 @@ def convert_temp():
         return
     print("Temperature is :", temp_converted , " ", unit.upper())
 
-def student_grades():
+def student_grades_tuples():
     """
     Day 3
-    Calculate average grade and determine letter grade.
+    Calculate average grade and determine letter grade using tuples.
     
     Prompts user for grades in multiple subjects, calculates the average,
     and assigns a letter grade based on the average. Handles invalid input.
+    Uses tuples to store student names and grades.
     """
-    grades = {}
+    students = []
     num_students = int(input("Enter number of students: "))
     for i in range(num_students):
         name = input(f"Enter name of student {i+1}: ")
         grade = float(input(f"Enter grade for {name}: "))
-        grades[name] = grade
-    average = sum(grades.values()) / num_students
-    maximum = max(grades.values())
-    minimum = min(grades.values())
-    for name, grade in grades.items():
+        students.append((name, grade))
+    average = sum(grade for _, grade in students) / num_students
+    maximum = max(students, key=lambda student: student[1])
+    minimum = min(students, key=lambda student: student[1])
+    for name, grade in students:
         print(f"{name}: Grade = {grade}, Letter Grade = {grade}")   
     print(f"Average Grade: {average}")
     print(f"Highest Grade: {maximum}")
     print(f"Lowest Grade: {minimum}")
 
+def word_freq():
+    """
+    Day 4
+    Calculate word frequency in a given text.
+    
+    Prompts user for a text input, then calculates and displays the frequency
+    of each word in the text. Ignores case and punctuation.
+    """
+    text = input("Enter a text: ")
+    words = text.split()
+    freq = {}
+    for word in words:
+        print(word)
+        cnt = freq.get(word, 0)
+        freq[word] = cnt + 1
+    print("Frequency ", freq)
+
+def guess_number():
+    """
+    Day 5. Prompt user to guess random number
+    """
+    rand = random.randint(0, 100)
+    print ("Rand : ", rand)
+    num = (int)(input("Think of a number between 1 and 100 :"))
+    tries = 1
+    while (num != rand) :
+        print ("Number : ", num)
+
+        if (num > rand) :
+            print("Your guess was higher")
+        else :
+            print("Your guess was lower")
+        num = (int)(input("Think of a new number ; "))
+        tries = ++tries
+    if (num == rand) :
+        print(f"Correct guess in {tries} times")
 
 def main():
     """Main entry point of the program.
     
     Executes the temperature conversion function.
     """
-    student_grades()
+    guess_number()
 
 
 if __name__ == "__main__":
