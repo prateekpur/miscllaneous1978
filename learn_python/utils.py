@@ -5,3 +5,11 @@ def check_input_num(prompt):
             return int(user_input)
         except ValueError:
             print("Invalid input, please enter a number")
+
+def check_input_float(prompt):
+    while True:
+        user_input = input(prompt)
+        try:
+            return float(user_input)
+        except ValueError:
+            print("Invalid input, please enter a float")
