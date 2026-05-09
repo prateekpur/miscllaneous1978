@@ -74,12 +74,17 @@ if __name__ == "__main__":
     lines = read_file("log.txt")
     summary_cnt,msg_lines = get_counts(lines)
 
+    print("========== LOG FILE SUMMARY ==========\n")
     print(f"Total log lines           : {summary_cnt.tot_cnt}")
     print(f"Total valid log entries   : {summary_cnt.tot_cnt - summary_cnt.invalid_cnt}")
-    print(f"Malformed log entries     : {summary_cnt.invalid_cnt}")
-    print(f"Error : {summary_cnt.error_cnt}.   \nWarning : {summary_cnt.warn_cnt}.    \nInfo : {summary_cnt.info_cnt}")
+    print(f"Malformed log entries     : {summary_cnt.invalid_cnt}\n\n")
+
+    print("---------- LOG LEVEL COUNTS ----------\n")
+    print(f"Error : {summary_cnt.error_cnt}   \nWarning : {summary_cnt.warn_cnt}    \nInfo : {summary_cnt.info_cnt}")
+    print("\n---------- ERROR MESSAGES ------------\n")
     print("Errors : \n", "".join(msg_lines.error_msgs))
-    print("Invalid lines. : \n","".join(msg_lines.invalid_lines))
+    print("---------- MALFORMED LINES -----------\n")
+    print("".join(msg_lines.invalid_lines))
    
         
 
