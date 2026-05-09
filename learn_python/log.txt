@@ -1,0 +1,6 @@
+2026-05-08 10:15:22 INFO User login successful
+2026-05-08 10:16:10 ERROR Database connection failed
+2026-05-08 10:17:01 WARNING High memory usage
+2026-05-08 10:18:44 INFO File uploaded
+INVALID LOG LINE
+2026-05-08 10:20:11 ERROR Timeout while calling API
