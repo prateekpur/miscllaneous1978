@@ -11,11 +11,7 @@ tasks = []
 def list_tasks():
     if not tasks :
         print("No tasks.")
-        return
-    tmp = 1
-    for task in tasks :
-        print(tmp , " : " , task.desc, " : ", task.completed )
-        tmp += 1
+        return []
     return tasks
 
 def add_task(task):
@@ -43,13 +39,10 @@ def save_tasks(filename):
 
 def read_tasks(filename):
     global tasks
+    with open(filename, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
     try:
-        with open(filename, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            tasks = [Task(**item) for item in data]
-    except FileNotFoundError:
-        print("File not found")
-    except json.JSONDecodeError as e:
-        print(f"Invalid JSON: {e}")
+        tasks = [Task(**item) for item in data]
     except TypeError as e:
-        print("Invalid JSON schema:", e)
+        raise ValueError(f"Invalid JSON schema: {e}") from e
