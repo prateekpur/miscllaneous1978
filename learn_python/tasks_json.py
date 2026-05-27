@@ -1,8 +1,7 @@
-from dataclasses import dataclass, asdict
+from pydantic import BaseModel
 import json
 
-@dataclass
-class Task:
+class Task(BaseModel):
     desc: str
     completed: bool
 
@@ -15,7 +14,7 @@ def list_tasks():
     return tasks
 
 def add_task(task):
-    tasks.append(Task(task, False))
+    tasks.append(Task(desc=task, completed=False))
 
 def complete_task(index) :
     if (index < 0 or index > len(tasks) - 1):
@@ -35,7 +34,11 @@ def get_task_count():
 def save_tasks(filename):
     print(tasks)
     with open(filename, "w", encoding="utf-8") as f:
-        json.dump([asdict(task) for task in tasks], f, indent=2)
+        json.dump(
+            [task.model_dump() for task in tasks],
+            f,
+            indent=2
+        )
 
 def read_tasks(filename):
     global tasks
