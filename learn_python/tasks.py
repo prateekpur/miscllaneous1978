@@ -1,3 +1,11 @@
+from dataclasses import dataclass
+import sys
+
+@dataclass
+class Task:
+    desc: str
+    completed: bool
+
 tasks = []
 
 def list_tasks():

@@ -16,6 +16,7 @@ def list_tasks():
     for task in tasks :
         print(tmp , " : " , task.desc, " : ", task.completed )
         tmp += 1
+    return tasks
 
 def add_task(task):
     tasks.append(Task(task, False))

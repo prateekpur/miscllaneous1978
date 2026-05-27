@@ -9,7 +9,7 @@ dept_col = 2
 REQUIRED_FIELDS = {"Salary", "Department"}
 
 def read_csv():
-    filename = "employees.csv"
+    filename = "employees1.csv"
     while True:
         try:
             with open(filename, "r", encoding="utf-8") as file:
@@ -80,7 +80,7 @@ if __name__ == "__main__":
        row, col = summary_data(lines)
        print("Rows : " , row, "\nColoms : ", col)
     
-    if len(lines) <= 1 :
+    if len(lines) < 1 :
         print("File has no records of data")
     else :
         tot_salary, avg_salary, max_sal, min_sal = summary_numeric(lines)
