@@ -1,8 +1,10 @@
 from dataclasses import dataclass
-import sys
 from fastapi import HTTPException
 from datetime import date
 from typing import Optional
+import json
+from dataclasses import asdict
+
 
 @dataclass
 class Expense:
@@ -38,3 +40,19 @@ def categorize_expenses():
         amt = exp.amount + categ_expenses.get(exp.category , 0.0)
         categ_expenses[exp.category] = amt
     return categ_expenses
+
+
+def save_expenses(filename):
+    print(expenses)
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump([asdict(e) for e in expenses], f, default=str)
+
+def read_expenses(filename):
+    global expenses
+    with open(filename, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    try:
+        expenses = [Expense(**item) for item in data]
+    except TypeError as e:
+        raise ValueError(f"Invalid JSON schema: {e}") from e

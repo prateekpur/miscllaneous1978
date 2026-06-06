@@ -44,3 +44,11 @@ def delete_task(expense_id: str):
 @app.get("/expenses/categorize")
 def get_tasks_category():
     return expense.categorize_expenses()
+
+@app.post("/saveExpense")
+def save_expense():
+    expense.save_expenses(TASK_FILE)
+
+@app.post("/loadExpense")
+def load_expense():
+    expense.read_expenses(TASK_FILE)
