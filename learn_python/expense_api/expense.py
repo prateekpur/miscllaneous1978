@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from fastapi import HTTPException
 from datetime import date
 from typing import Optional
 import json
@@ -18,8 +17,6 @@ class Expense:
 expenses = []
 
 def list_expenses():
-    if not expenses :
-        return []
     return expenses
 
 def add_expense(exp):
