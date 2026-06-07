@@ -19,7 +19,7 @@ expenses = []
 
 def list_expenses():
     if not expenses :
-        print ("No Expenses")
+        return []
     return expenses
 
 def add_expense(exp):
@@ -30,9 +30,9 @@ def remove_expense(id):
     global expenses
     expense_obj = next((e for e in expenses if e.id == id), None)
     if not expense_obj:
-        raise HTTPException(status_code=404, detail="Expense not found")
+        return None
     expenses.remove(expense_obj)
-    return {"message": "deleted"}
+    return expense_obj
 
 def categorize_expenses():
     categ_expenses = {}
@@ -43,16 +43,29 @@ def categorize_expenses():
 
 
 def save_expenses(filename):
-    print(expenses)
+    #print(expenses)
+    payload = []
+    for e in expenses:
+        item = asdict(e)
+        # store date consistently as ISO string
+        item["date"] = e.date.isoformat()
+        payload.append(item)
     with open(filename, "w", encoding="utf-8") as f:
-        json.dump([asdict(e) for e in expenses], f, default=str)
+        json.dump(payload, f)
 
 def read_expenses(filename):
     global expenses
     with open(filename, "r", encoding="utf-8") as f:
         data = json.load(f)
-
-    try:
-        expenses = [Expense(**item) for item in data]
-    except TypeError as e:
-        raise ValueError(f"Invalid JSON schema: {e}") from e
+    parsed = []
+    for item in data:
+        try:
+            raw_date = item.get("date")
+            if not isinstance(raw_date, str):
+                raise ValueError("date must be an ISO string")
+            item["date"] = date.fromisoformat(raw_date)
+            parsed.append(Expense(**item))
+        except (ValueError, TypeError) as e:
+            raise ValueError(f"Invalid expense record: {e}") from e
+    expenses = parsed
+    return expenses
